@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import GlobalApi from "../Services/GlobalApi";
-const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/original";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
+import { IMAGE_BASE_URL } from "../Constants/App.constants";
 const screeWidth = window.innerWidth;
+
 function Slider() {
   const [movieList, setMovieList] = useState([]);
   const elementRef = useRef();
@@ -11,17 +12,19 @@ function Slider() {
   }, []);
 
   const getTrendingMovie = () => {
-    GlobalApi.getTrendingMovie.then((res) => {
-      setMovieList(res.data.results);
-    });
+    GlobalApi.getTrendingVideos
+      .then((res) => {
+        setMovieList(res.data.results);
+      })
+      .catch((err) => console.log(err));
   };
 
   const sliderRight = (element) => {
-    element.scrollLeft += screeWidth-110;
+    element.scrollLeft += screeWidth - 110;
   };
 
   const sliderLeft = (element) => {
-    element.scrollLeft -= screeWidth-110;
+    element.scrollLeft -= screeWidth - 110;
   };
 
   return (
